@@ -8,7 +8,8 @@ Les participants construiront progressivement une plateforme industrielle capabl
 
 * collecter des données industrielles via OPC-UA ;
 * transporter les données avec MQTT ;
-* traiter et visualiser les données au niveau Edge ;
+* traiter les données au niveau Edge ;
+* stocker et visualiser les données industrielles ;
 * intégrer les données dans le Cloud AWS ;
 * mettre en œuvre des mécanismes de stockage, de traitement et de notification.
 
@@ -38,83 +39,114 @@ Les participants construiront progressivement une plateforme industrielle capabl
 * Architecture Edge-to-Cloud
 * Intégration IT/OT
 * Flux de données industriels
+* Technologies utilisées
 
 ### TP01 — Mise en place de l’environnement
 
 * Vagrant
 * Infrastructure de laboratoire
 * Machines virtuelles OT, Edge et Ansible
+* Réseau et dossiers synchronisés
 
 ### TP02 — Simulation OT avec OPC-UA
 
 * Simulation d’un PLC industriel
-* Serveur OPC-UA
-* Structure des données OPC-UA
+* Architecture OPC-UA
+* Structure des données industrielles
+* NodeIds et Address Space
 * Visualisation avec UaExpert
 
 ---
 
 ## Jour 2 — Edge Computing & Monitoring Local
 
-### TP03 — Déploiement de la plateforme Edge avec Docker Compose
+### TP03 — Déploiement du microservice MQTT Broker (Mosquitto)
 
-Déploiement automatisé des services :
+* Architecture Publish / Subscribe
+* Topics MQTT
+* Déploiement du broker MQTT avec Docker
+* Validation des échanges MQTT
 
-* MQTT Broker
-* OPC-UA Data Collector
-* Node-RED
-* InfluxDB
-* Grafana
-
-### TP04 — Collecte et traitement des données industrielles
+### TP04 — Développement et déploiement du Data Collector
 
 * OPC-UA Client
-* MQTT
-* Node-RED
-* Traitement des flux temps réel
+* Collecte des données industrielles
+* Publication MQTT
+* Dockerfile
+* Construction de l’image Docker
+* Déploiement du microservice
 
-### TP05 — Stockage et visualisation des données
+### TP05 — Déploiement du microservice Node-RED
 
-* InfluxDB
-* Dashboards Grafana
+* Traitement des flux MQTT
+* Découverte de Node-RED
+* Création des premiers flows industriels
+
+### TP06 — Déploiement du microservice InfluxDB
+
+* Base de données Time-Series
+* Buckets et organisation des données
+* Stockage des données industrielles
+
+### TP07 — Déploiement du microservice Grafana
+
+* Connexion à InfluxDB
+* Création des dashboards
 * Monitoring industriel temps réel
+
+### TP08 — Intégration Node-RED & InfluxDB
+
+* Transformation des données
+* Injection des données dans InfluxDB
+* Validation du pipeline Edge
+
+### TP09 — Alerting & Monitoring industriel
+
+* Alarmes Grafana
+* Détection d’anomalies
+* Notifications de supervision
+
+### TP10 — Automatisation de la plateforme avec Docker Compose
+
+* Infrastructure as Code
+* Docker Compose
+* Déploiement automatisé de la plateforme Edge complète
 
 ---
 
 ## Jour 3 — Cloud Integration
 
-### TP06 — Intégration Edge-to-Cloud avec AWS IoT Core
+### TP11 — Intégration Edge-to-Cloud avec AWS IoT Core & Amazon S3
 
 * MQTT Bridge
 * AWS IoT Core
-* Communication sécurisée Edge → Cloud
-
-### TP07 — Stockage des données avec Amazon S3
-
 * AWS IoT Rules
-* Archivage des données industrielles
+* Stockage des données dans Amazon S3
 * Data Lake industriel
 
-### TP08 — Traitement événementiel et notifications
+### TP12 — Traitement événementiel avec AWS Lambda & Amazon SNS
 
-* AWS Lambda
-* Amazon SNS
-* Notifications temps réel
-* Cas d’usage de supervision industrielle
+* Déclenchement automatique avec Lambda
+* Notifications industrielles avec SNS
+* Cas d’usage de supervision
+* Validation de l’architecture Edge-to-Cloud
 
 ---
 
 # Architecture cible
 
 ```text
-PLC → OPC-UA → MQTT → Node-RED → InfluxDB → Grafana
-                                      │
-                                      ▼
-                               AWS IoT Core
-                                      │
-                     ┌────────────────┴───────────────┐
-                     ▼                                ▼
-                   S3                           Lambda → SNS
+PLC → OPC-UA → MQTT → Data Collector → Node-RED → InfluxDB → Grafana
+                                                        │
+                                                        ▼
+                                                 AWS IoT Core
+                                                        │
+                            ┌───────────────────────────┴──────────────────────────┐
+                            ▼                                                      ▼
+                        Amazon S3                                           AWS Lambda
+                                                                                  │
+                                                                                  ▼
+                                                                            Amazon SNS
 ```
 
 ---
@@ -123,6 +155,7 @@ PLC → OPC-UA → MQTT → Node-RED → InfluxDB → Grafana
 
 * OPC-UA
 * MQTT
+* Mosquitto
 * Node-RED
 * Docker
 * Docker Compose

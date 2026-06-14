@@ -34,7 +34,7 @@ Dans ce projet, nous allons construire une **plate forme IIoT** complète pour l
 
 Notre architecture est représentée ci-dessous :
 
-![basic-Architecture](./img/Architecture.png)
+![basic-Architecture](./img/3-layers-basic-architecture.png)
 
 ---
 
