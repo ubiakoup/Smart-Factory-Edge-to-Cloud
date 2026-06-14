@@ -1,0 +1,8 @@
+*.pptx
+*.drawio
+.vagrant/
+venv
+.env.*
+*.vault
+secrets/
+certs/
